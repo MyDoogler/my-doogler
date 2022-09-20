@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { UploadForm } from '../components/ImageUpload';
 import { Doogler } from '../components/Doogler';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { query, collection } from 'firebase/firestore';
@@ -29,8 +28,9 @@ export const Dooglers = () => {
         ))
       ) : (
         <>
-          <p>No dooglers yet, create below</p>
-          <UploadForm />
+          <p>
+            No dooglers yet, <Link to="/create">create</Link>
+          </p>
         </>
       )}
     </>
