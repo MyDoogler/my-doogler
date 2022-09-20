@@ -6,15 +6,14 @@ export const Welcome = () => {
   const firebaseApp = useFirebaseApp()
   return (
     <div className="App">
-      <img src={dog}
-        width={100}
-      />
+      <img src={dog} width={100} />
       <p style={{ fontSize: "3rem", marginTop: "2rem" }}>MyDoogler</p>
       Firebase Project ID:
       <pre>
         <code>{firebaseApp.options.projectId || ""}</code>
       </pre>
       <Link to="/dooglers">See Dooglers 🐕</Link>
+      <Link to="/create">Create</Link>
     </div>
   )
 }

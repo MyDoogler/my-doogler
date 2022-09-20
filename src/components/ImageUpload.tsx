@@ -59,7 +59,7 @@ export interface PendingUpload {
   storageRef: StorageReference;
 }
 
-export const UploadForm = () => {
+export const ImageUpload = () => {
   // TODO(piotrostr)
   // take the current user and build the storage ref
   // apply CUD rules to the storage ref for the user, R for everyone else
