@@ -6,7 +6,7 @@ import { query, collection } from "firebase/firestore";
 
 export const Dooglers = () => {
   const firestore = useFirestore();
-  const dooglersQuery = query(collection(firestore, "dooglers"));
+  const dooglersQuery = query(collection(firestore, "dogs"));
   const { status, data: dooglers } = useFirestoreCollectionData(dooglersQuery)
   return (
     <>
