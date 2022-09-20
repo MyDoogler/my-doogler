@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useStorage, useStorageDownloadURL } from "reactfire";
 import { ref } from "firebase/storage";
+import { UploadForm } from "../components/ImageUpload";
 
 export interface Doogler {
   name: string;
@@ -33,6 +34,7 @@ export const Dooglers = () => {
   return (
     <>
       <Link to="/">Go back</Link>
+      <UploadForm />
       <pre>
         <Doogler />
       </pre>
