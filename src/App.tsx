@@ -1,10 +1,6 @@
-import './App.css'
+import './App.css';
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import {
   FirestoreProvider,
@@ -12,21 +8,21 @@ import {
   useFirebaseApp,
   StorageProvider,
   AnalyticsProvider,
-  FunctionsProvider
-} from 'reactfire'
-import { getFirestore } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
-import { getStorage } from 'firebase/storage'
-import { getAnalytics } from 'firebase/analytics'
-import { getFunctions } from 'firebase/functions'
+  FunctionsProvider,
+} from 'reactfire';
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
+import { getAnalytics } from 'firebase/analytics';
+import { getFunctions } from 'firebase/functions';
 
-import { Welcome } from './pages/Welcome'
-import { Dooglers } from './pages/Dooglers'
-import { Login } from './pages/Login'
-import { Create } from './pages/Create'
+import { Welcome } from './pages/Welcome';
+import { Dooglers } from './pages/Dooglers';
+import { Login } from './pages/Login';
+import { Create } from './pages/Create';
 
 function FirebaseProvider({ children }: { children: React.ReactNode }) {
-  const firebaseApp = useFirebaseApp()
+  const firebaseApp = useFirebaseApp();
   return (
     <FirestoreProvider sdk={getFirestore(firebaseApp)}>
       <AuthProvider sdk={getAuth(firebaseApp)}>
@@ -39,7 +35,7 @@ function FirebaseProvider({ children }: { children: React.ReactNode }) {
         </StorageProvider>
       </AuthProvider>
     </FirestoreProvider>
-  )
+  );
 }
 
 function Router() {
@@ -52,7 +48,7 @@ function Router() {
         <Route path="/create" element={<Create />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 function App() {
@@ -60,7 +56,7 @@ function App() {
     <FirebaseProvider>
       <Router />
     </FirebaseProvider>
-  )
+  );
 }
 
-export default App
+export default App;

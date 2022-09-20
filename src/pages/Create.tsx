@@ -1,4 +1,4 @@
-import { ImageUpload } from "../components/ImageUpload"
+import { ImageUpload } from '../components/ImageUpload';
 
 export const Create = () => {
   return (
@@ -6,5 +6,5 @@ export const Create = () => {
       <ImageUpload />
       <div>create</div>
     </>
-  )
-}
+  );
+};
