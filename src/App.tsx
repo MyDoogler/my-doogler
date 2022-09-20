@@ -22,6 +22,7 @@ import { getFunctions } from 'firebase/functions'
 
 import { Welcome } from './pages/Welcome'
 import { Dooglers } from './pages/Dooglers'
+import { Login } from './pages/Login'
 
 function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const firebaseApp = useFirebaseApp()
@@ -48,6 +49,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/dooglers" element={<Dooglers />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </FirebaseProvider>
