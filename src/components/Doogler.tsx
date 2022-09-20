@@ -18,9 +18,7 @@ export const Doogler = (props: DooglerProps) => {
     <div>
       <p style={{ fontSize: '3rem' }}>{props.name}</p>
       {
-        status === 'loading'
-          ? <p>Loading...</p>
-          : <img src={src} alt="dogs-stitch" style={{ maxWidth: 250 }} />
+        status !== 'loading' && <img src={src} alt="dogs-stitch" style={{ maxWidth: 200 }} />
       }
       <p>{props.breed}</p>
       <p>{props.age}</p>
