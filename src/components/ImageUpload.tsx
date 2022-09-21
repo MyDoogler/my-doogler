@@ -63,7 +63,6 @@ const baseStyle = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
   borderColor: "#eeeeee",
@@ -72,6 +71,10 @@ const baseStyle = {
   color: "#bdbdbd",
   outline: "none",
   transition: "border .24s ease-in-out",
+  cursor: "pointer",
+  width: "100%",
+  height: "100%",
+  minHeight: "300px",
 };
 
 const focusedStyle = {
@@ -132,6 +135,8 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
           setImgSrc(_uploadTask.snapshot.ref.toString());
         }
       })
+      setSnapshotRef(_uploadTask.snapshot.ref);
+      setImgSrc(_uploadTask.snapshot.ref.toString());
     }
     setPendingsUploads(_pendingUploads);
   }, []);
@@ -184,34 +189,25 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        maxWidth: 350,
-      }}
-    >
-      {pendingUploads.map(({ uploadTask, storageRef }, index) => (
-        <div key={index}>
-          <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
-        </div>
-      ))}
+    <>
       {downloadUrl ? (
-        <img src={downloadUrl} width={100} />
-      ) : (
-        <div className="dropzone container" style={{ cursor: "pointer" }}>
-          <div {...getRootProps({ style })}>
-            <input {...getInputProps()} />
-            <p>Drag 'n' drop a doggo</p>
+        <div style={{ position: 'relative' }}>
+          <img alt="user-uploaded-dog" src={downloadUrl} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+          <div onClick={clear} style={{ color: 'white', position: 'absolute', zIndex: '9', fontSize: '3rem', top: 10, left: -10, cursor: 'pointer' }}>
+            {'\u274C'} {/* X emoji */}
           </div>
         </div>
+      ) : (
+        <div className="photodump" {...getRootProps({ style })}>
+          <input {...getInputProps()} />
+          {pendingUploads.map(({ uploadTask, storageRef }, index) => (
+            <div key={index}>
+              <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
+            </div>
+          ))}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/OOjs_UI_icon_camera.svg/1200px-OOjs_UI_icon_camera.svg.png" width={50} style={{ margin: 'auto' }} alt="camera-icon" />
+        </div>
       )}
-      {downloadUrl && (
-        <button onClick={clear} style={{ width: 80 }}>
-          Clear
-        </button>
-      )}
-    </div>
+    </>
   );
 };

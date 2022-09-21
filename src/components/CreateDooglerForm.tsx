@@ -9,11 +9,11 @@ export const CreateDooglerForm = () => {
   const firestore = useFirestore();
   const { status, data: user } = useUser();
 
-  const [name, setName] = useState<string>();
-  const [breed, setBreed] = useState<string>();
-  const [age, setAge] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [office, setOffice] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [breed, setBreed] = useState<string>("");
+  const [age, setAge] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [office, setOffice] = useState<string>("");
 
   // imgSrc is set by ImageUpload.tsx, after the user uploads an image
   const [imgSrc, setImgSrc] = useState<string>()
@@ -21,17 +21,15 @@ export const CreateDooglerForm = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
 
+  const gotEverything = !name || !breed || !age || !office || !imgSrc
+
   const submit = async () => {
     if (!user) {
       alert("You must be signed in to create a doogler");
       return;
     }
-    if (!name || !breed || !age || !office) {
-      alert("Please fill out all required fields");
-      return;
-    }
-    if (!imgSrc) {
-      alert("Please upload a photo");
+    if (gotEverything) {
+      alert("Please fill out all required fields, including the photo");
       return;
     }
     setLoading(true);
@@ -65,75 +63,100 @@ export const CreateDooglerForm = () => {
 
   return (
     <div>
-      {status === "loading" ? <Spinner /> : (
-        success ? <ThanksForCreating /> : (
-          <>
-            <ImageUpload url={`${user?.uid}/dogs`} setImgSrc={setImgSrc} />
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Name:</b>
+      {status === "loading"
+        ? <Spinner />
+        : (
+          success
+            ? <ThanksForCreating />
+            : (
+              <div className="upload-form">
+                <div className="upload-form__upload">
+                  <ImageUpload url={`${user?.uid}/dogs`} setImgSrc={setImgSrc} />
                 </div>
-                <input
-                  placeholder={"Stitch"}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Breed:</b>
+                <div className="upload-form__input">
+                  <div style={{ textAlign: "start" }}>
+                    <div className="label">
+                      <b>Name:</b>
+                    </div>
+                    <input
+                      placeholder={"Stitch"}
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value)
+                        e.preventDefault();
+                      }}
+                    />
+                  </div>
+                  <div style={{ textAlign: "start" }}>
+                    <div className="label">
+                      <b>Breed:</b>
+                    </div>
+                    <input
+                      placeholder={"Pug"}
+                      value={breed}
+                      onChange={(e) => {
+                        setBreed(e.target.value)
+                        e.preventDefault();
+                      }}
+                    />
+                  </div>
+                  <div style={{ textAlign: "start" }}>
+                    <div className="label">
+                      <b>Age:</b>
+                    </div>
+                    <input
+                      placeholder={"3"}
+                      value={age}
+                      type={"number"}
+                      min={0}
+                      max={20}
+                      onChange={(e) => {
+                        setAge(e.target.value)
+                        e.preventDefault();
+                      }}
+                    />
+                  </div>
+                  <div style={{ textAlign: "start" }}>
+                    <div className="label">
+                      <b>Office:</b>
+                    </div>
+                    {/* TODO could make the below a select */}
+                    <input
+                      placeholder={"IE-DUB-VSO"}
+                      value={office}
+                      onChange={(e) => {
+                        setOffice(e.target.value)
+                        e.preventDefault();
+                      }}
+                    />
+                  </div>
+                  <div style={{ textAlign: "start" }}>
+                    <div className="label">
+                      <b>Description (optional):</b>
+                    </div>
+                    <textarea
+                      placeholder={"Loves beily rubs"}
+                      value={description}
+                      style={{ height: '5rem' }}
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                        e.preventDefault();
+                      }}
+                    />
+                  </div>
+                  <button
+                    style={{
+                      width: 80,
+                      height: 30,
+                    }}
+                    onClick={!loading ? submit : () => { }}
+                  >
+                    {!loading ? "Submit" : "Submitting..."}
+                  </button>
                 </div>
-                <input
-                  placeholder={"Pug"}
-                  value={breed}
-                  onChange={(e) => setBreed(e.target.value)}
-                />
               </div>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Age:</b>
-                </div>
-                <input
-                  placeholder={"3"}
-                  value={age}
-                  type={"number"}
-                  min={0}
-                  max={20}
-                  onChange={(e) => setAge(e.target.value)}
-                />
-              </div>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Office:</b>
-                </div>
-                <input
-                  placeholder={"IE-DUB-VSO"}
-                  value={office}
-                  onChange={(e) => setOffice(e.target.value)}
-                />
-              </div>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Owner:</b>
-                </div>
-                <div>{user?.email || "❌ user not logged in!"}</div>
-              </div>
-              <div style={{ textAlign: "start" }}>
-                <div>
-                  <b>Description (optional):</b>
-                </div>
-                <input
-                  placeholder={"Loves belly rubs"}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
-            </div>
-            {!loading ? <div onClick={submit}>Submit</div> : <div>Submitting...</div>}
-          </>
-        )
-      )}
+            )
+        )}
     </div>
   )
 }
