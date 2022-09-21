@@ -3,6 +3,7 @@ import { Doogler } from "../components/Doogler";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { query, collection } from "firebase/firestore";
 import { Spinner } from "../components/Spinner";
+import { Header } from "../components/Header";
 
 export const Dooglers = () => {
   const firestore = useFirestore();
@@ -10,7 +11,7 @@ export const Dooglers = () => {
   const { status, data: dooglers } = useFirestoreCollectionData(dooglersQuery);
   return (
     <>
-      <Link to="/">Go back</Link>
+      <Header />
       {status === "loading" ? (
         <Spinner />
       ) : dooglers?.length && dooglers.length ? (
