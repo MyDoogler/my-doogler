@@ -1,6 +1,6 @@
-import './App.css';
+import "./App.css";
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import {
   FirestoreProvider,
@@ -9,16 +9,16 @@ import {
   StorageProvider,
   AnalyticsProvider,
   FunctionsProvider,
-} from 'reactfire';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
-import { getAnalytics } from 'firebase/analytics';
-import { getFunctions } from 'firebase/functions';
+} from "reactfire";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
+import { getFunctions } from "firebase/functions";
 
-import { Welcome } from './pages/Welcome';
-import { Dooglers } from './pages/Dooglers';
-import { Create } from './pages/Create';
+import { Welcome } from "./pages/Welcome";
+import { Dooglers } from "./pages/Dooglers";
+import { Create } from "./pages/Create";
 
 function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const firebaseApp = useFirebaseApp();

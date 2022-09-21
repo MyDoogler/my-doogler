@@ -1,13 +1,13 @@
-import { useCallback, useState } from 'react';
-import { useStorage, useStorageTask } from 'reactfire';
+import { useCallback, useState } from "react";
+import { useStorage, useStorageTask } from "reactfire";
 import {
   ref,
   uploadBytesResumable,
   UploadTaskSnapshot,
   StorageReference,
   UploadTask,
-} from 'firebase/storage';
-import Dropzone from 'react-dropzone';
+} from "firebase/storage";
+import Dropzone from "react-dropzone";
 
 export interface UploadProgressProps {
   uploadTask: UploadTask | undefined;
@@ -23,14 +23,14 @@ export const UploadProgress = ({
   }
   const { status, data: uploadProgress } = useStorageTask<UploadTaskSnapshot>(
     uploadTask as any,
-    storageRef,
+    storageRef
   );
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <span>0% uploaded</span>;
   } else {
     switch (uploadProgress.state) {
-      case 'running': {
+      case "running": {
         const { bytesTransferred, totalBytes } = uploadProgress;
         return (
           <span>
@@ -38,16 +38,16 @@ export const UploadProgress = ({
           </span>
         );
       }
-      case 'paused': {
+      case "paused": {
         return <span>Upload paused</span>;
       }
-      case 'success': {
+      case "success": {
         return <>🎉</>;
       }
-      case 'error': {
+      case "error": {
         return <span>Upload error</span>;
       }
-      case 'canceled': {
+      case "canceled": {
         return <span>Upload canceled</span>;
       }
     }
@@ -64,9 +64,9 @@ export const ImageUpload = () => {
   // take the current user and build the storage ref
   // apply CUD rules to the storage ref for the user, R for everyone else
   const storage = useStorage();
-  const storageRef = ref(storage, 'some-user/dooglers'); // TODO this has to be dynamic
+  const storageRef = ref(storage, "some-user/dooglers"); // TODO this has to be dynamic
   const [pendingUploads, setPendingsUploads] = useState<Array<PendingUpload>>(
-    [],
+    []
   );
 
   const onDrop = useCallback((files: Array<File>) => {
@@ -95,7 +95,7 @@ export const ImageUpload = () => {
             style={{
               width: 250,
               height: 250,
-              border: '1px solid black',
+              border: "1px solid black",
             }}
           >
             <div {...getRootProps()}>

@@ -1,17 +1,17 @@
-import { Link } from 'react-router-dom';
-import { Doogler } from '../components/Doogler';
-import { useFirestore, useFirestoreCollectionData } from 'reactfire';
-import { query, collection } from 'firebase/firestore';
-import { Spinner } from '../components/Spinner';
+import { Link } from "react-router-dom";
+import { Doogler } from "../components/Doogler";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import { query, collection } from "firebase/firestore";
+import { Spinner } from "../components/Spinner";
 
 export const Dooglers = () => {
   const firestore = useFirestore();
-  const dooglersQuery = query(collection(firestore, 'dogs'));
+  const dooglersQuery = query(collection(firestore, "dogs"));
   const { status, data: dooglers } = useFirestoreCollectionData(dooglersQuery);
   return (
     <>
       <Link to="/">Go back</Link>
-      {status === 'loading' ? (
+      {status === "loading" ? (
         <Spinner />
       ) : dooglers?.length && dooglers.length ? (
         dooglers.map((doogler, index) => (
