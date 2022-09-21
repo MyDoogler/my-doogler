@@ -83,7 +83,7 @@ export const ImageUpload = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ display: 'inline-block' }}>
       {pendingUploads.map(({ uploadTask, storageRef }, index) => (
         <div key={index}>
           <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
@@ -106,6 +106,6 @@ export const ImageUpload = () => {
           </section>
         )}
       </Dropzone>
-    </>
+    </div>
   );
 };
