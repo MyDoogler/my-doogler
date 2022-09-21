@@ -20,8 +20,9 @@ export const ImageWithTextBlock = ({ imageSrc, text }: Props) => {
         style={{
           position: "absolute",
           margin: "auto",
-          fontSize: "2rem",
+          fontSize: "3rem",
           color: "white",
+          fontWeight: 700
         }}
       >
         {text}

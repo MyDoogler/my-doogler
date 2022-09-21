@@ -13,7 +13,10 @@ export const Dooglers = () => {
     <>
       <Header />
       {status === "loading" ? (
-        <Spinner />
+        <div style={{ display: 'flex', justifyContent: 'center', height: '70vh', alignItems: 'center', flexDirection: 'column' }}>
+          <Spinner />
+          <p>Loading...</p>
+        </div>
       ) : dooglers?.length && dooglers.length ? (
         dooglers.map((doogler, index) => (
           <Doogler
