@@ -1,19 +1,25 @@
-import dog from '../assets/dog.svg';
-import { useFirebaseApp } from 'reactfire';
 import { Header } from "../components/Header"
+import { ImageWithTextBlock } from "../components/ImageWithTextBlock"
+import smartDogs from "../assets/smart-dogs.png"
+import { Login } from "../components/Login";
 
 export const Welcome = () => {
-  const firebaseApp = useFirebaseApp();
+  const text = "Join the Doogler community!"
   return (
     <>
       <Header />
-      <br />
-      <img src={dog} width={100} />
-      <p style={{ fontSize: '3rem', marginTop: '2rem' }}>MyDoogler</p>
-      Firebase Project ID:
-      <pre>
-        <code>{firebaseApp.options.projectId || ''}</code>
-      </pre>
+      <ImageWithTextBlock imageSrc={smartDogs} text={text} />
+      <h1 style={{ fontSize: '2rem' }}>
+        About
+      </h1>
+      <p style={{ padding: 10, maxWidth: 500, margin: 'auto' }}>
+        Welcome to the Doogler platform! We help connecting Dooglers with
+        Googlers in our Google offices, making the life easier to the Googlers
+        with dogs and more exciting office visits to our Googlers who love
+        dogs! To join the program, all you need to do is to click join and try
+        it out yourself!
+      </p>
+      <Login />
     </>
   );
 };
