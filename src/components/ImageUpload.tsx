@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import {
   useStorage,
-  useStorageDownloadURL,
-  useStorageTask,
-  useUser,
+  useStorageTask
 } from "reactfire";
 import {
   ref,
@@ -11,11 +9,11 @@ import {
   UploadTaskSnapshot,
   StorageReference,
   UploadTask,
-  getDownloadURL,
+  getDownloadURL
 } from "firebase/storage";
-import Dropzone, { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
-export interface UploadProgressProps {
+interface UploadProgressProps {
   uploadTask: UploadTask | undefined;
   storageRef: StorageReference;
 }
@@ -88,18 +86,20 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-export interface PendingUpload {
+interface PendingUpload {
   uploadTask: UploadTask;
   storageRef: StorageReference;
 }
 
-export const ImageUpload = () => {
-  // TODO(piotrostr)
-  // take the current user and build the storage ref
-  // apply CUD rules to the storage ref for the user, R for everyone else
+interface ImageUploadProps {
+  url: string | undefined;
+  setImgSrc: Dispatch<SetStateAction<string | undefined>>
+}
+
+export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
   const storage = useStorage();
   const [snapshotRef, setSnapshotRef] = useState<StorageReference>();
-  const storageRef = ref(storage, "some-user/dooglers"); // TODO this has to be dynamic
+  const storageRef = ref(storage, url);
   const [pendingUploads, setPendingsUploads] = useState<Array<PendingUpload>>(
     []
   );
@@ -107,7 +107,6 @@ export const ImageUpload = () => {
 
   const onDrop = useCallback((files: Array<File>) => {
     const _pendingUploads = Array<PendingUpload>();
-    // change slice size to support multiple uploads
     for (const file of files.slice(0, 1)) {
       if (
         !file.name.endsWith(".jpg") &&
@@ -117,22 +116,51 @@ export const ImageUpload = () => {
         alert("Only .jpg, .jpeg, and .png files are supported");
         return;
       }
-      const fileRef = ref(storageRef, file.name);
+      const fileNameWithoutSpaces = file.name.replace(/\s/g, "");
+      const fileRef = ref(storageRef, fileNameWithoutSpaces);
       const _uploadTask = uploadBytesResumable(fileRef, file);
       _pendingUploads.push({
         uploadTask: _uploadTask,
         storageRef: fileRef,
       });
-      setSnapshotRef(_uploadTask.snapshot.ref);
+      // only set when upload is done, subscribe to task state, 
+      // yet still pass it on to the child component to display progress
+      // this helps, yet still not ideal and using retries below
+      _uploadTask.on("state_changed", (snapshot) => {
+        if (snapshot.bytesTransferred === snapshot.totalBytes) {
+          setSnapshotRef(_uploadTask.snapshot.ref);
+          setImgSrc(_uploadTask.snapshot.ref.toString());
+        }
+      })
     }
     setPendingsUploads(_pendingUploads);
   }, []);
 
   useEffect(() => {
     if (snapshotRef) {
-      getDownloadURL(snapshotRef).then((url) => {
-        setDownloadUrl(url);
-      });
+      async function sleep(ms: number) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      let retries = 0;
+
+      const getUrl = async () => {
+        try {
+          const _url = await getDownloadURL(snapshotRef)
+          setDownloadUrl(_url);
+        } catch (e) {
+          if (retries < 5) {
+            retries += 1;
+            console.log("retrying after 1 sec", "retries", retries);
+            await sleep(1000)
+            await getUrl();
+          }
+        }
+      }
+
+      getUrl()
     }
   }, [snapshotRef]);
 

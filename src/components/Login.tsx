@@ -4,7 +4,6 @@ import { useAuth } from "reactfire";
 
 const uiConfig = {
   signInFlow: "popup",
-  signInSuccessUrl: "/",
   signInOptions: [
     EmailAuthProvider.PROVIDER_ID,
     GoogleAuthProvider.PROVIDER_ID,

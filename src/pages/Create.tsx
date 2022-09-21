@@ -1,16 +1,12 @@
-import { useState } from "react";
-import { useUser } from "reactfire";
+import { useSigninCheck, useUser } from "reactfire";
 import { Header } from "../components/Header";
-import { ImageUpload } from "../components/ImageUpload";
 import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
+import { CreateDooglerForm } from "../components/CreateDooglerForm";
+import { Login } from "../components/Login";
 
 export const Create = () => {
-  const [name, setName] = useState<string>();
-  const [breed, setBreed] = useState<string>();
-  const [age, setAge] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [office, setOffice] = useState<string>();
-  const user = useUser();
+  const { status, data: signInCheckResult } = useSigninCheck();
+
   return (
     <>
       <Header />
@@ -20,70 +16,18 @@ export const Create = () => {
         }
         text={"Add a Doogler"}
       />
-      <div>
-        <ImageUpload />
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Name:</b>
-            </div>
-            <input
-              placeholder={"Stitch"}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Breed:</b>
-            </div>
-            <input
-              placeholder={"Pug"}
-              value={breed}
-              onChange={(e) => setBreed(e.target.value)}
-            />
-          </div>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Age:</b>
-            </div>
-            <input
-              placeholder={"3"}
-              value={age}
-              type={"number"}
-              min={0}
-              max={20}
-              onChange={(e) => setAge(e.target.value)}
-            />
-          </div>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Office:</b>
-            </div>
-            <input
-              placeholder={"IE-DUB-VSO"}
-              value={office}
-              onChange={(e) => setOffice(e.target.value)}
-            />
-          </div>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Owner:</b>
-            </div>
-            <div>{user?.data?.email || "❌ user not logged in!"}</div>
-          </div>
-          <div style={{ textAlign: "start" }}>
-            <div>
-              <b>Description (optional):</b>
-            </div>
-            <input
-              placeholder={"Loves belly rubs"}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
+      {
+        status === "loading" ? (
+          <div>Loading...</div>
+        ) : signInCheckResult.signedIn ? (
+          <CreateDooglerForm />
+        ) : (
+          <>
+            <div>You must be signed in to create a doogler</div>
+            <Login />
+          </>
+        )
+      }
     </>
   );
 };
