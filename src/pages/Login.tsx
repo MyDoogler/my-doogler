@@ -1,11 +1,6 @@
-//import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-//import firebase from "firebase/compat/app"
-//import "firebase/compat/auth"
-//import { useAuth } from "reactfire"
-
 import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { useAuth, useUser } from 'reactfire';
+import { useAuth } from 'reactfire';
 
 const uiConfig = {
   signInFlow: "popup",
