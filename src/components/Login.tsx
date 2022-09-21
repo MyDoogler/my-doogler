@@ -1,5 +1,5 @@
 import { EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { StyledFirebaseAuth } from "react-firebaseui";
 import { useAuth } from "reactfire";
 
 const uiConfig = {
