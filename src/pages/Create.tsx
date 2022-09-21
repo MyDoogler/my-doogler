@@ -1,4 +1,4 @@
-import { useSigninCheck, useUser } from "reactfire";
+import { useSigninCheck } from "reactfire";
 import { Header } from "../components/Header";
 import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
 import { CreateDooglerForm } from "../components/CreateDooglerForm";
@@ -19,7 +19,7 @@ export const Create = () => {
       {
         status === "loading" ? (
           <div>Loading...</div>
-        ) : signInCheckResult.signedIn ? (
+        ) : !signInCheckResult.signedIn ? ( // for now make it non-signed in only
           <CreateDooglerForm />
         ) : (
           <>
