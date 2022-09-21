@@ -1,5 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import { useStorage, useStorageDownloadURL, useStorageTask } from "reactfire";
+import { useCallback, useEffect, useState, useMemo } from "react";
+import {
+  useStorage,
+  useStorageDownloadURL,
+  useStorageTask,
+  useUser,
+} from "reactfire";
 import {
   ref,
   uploadBytesResumable,
@@ -8,7 +13,7 @@ import {
   UploadTask,
   getDownloadURL,
 } from "firebase/storage";
-import Dropzone from "react-dropzone";
+import Dropzone, { useDropzone } from "react-dropzone";
 
 export interface UploadProgressProps {
   uploadTask: UploadTask | undefined;
@@ -43,7 +48,7 @@ export const UploadProgress = ({
         return <span>Upload paused</span>;
       }
       case "success": {
-        return <>🎉</>;
+        return <></>;
       }
       case "error": {
         return <span>Upload error</span>;
@@ -53,6 +58,34 @@ export const UploadProgress = ({
       }
     }
   }
+};
+
+const baseStyle = {
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#fafafa",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out",
+};
+
+const focusedStyle = {
+  borderColor: "#2196f3",
+};
+
+const acceptStyle = {
+  borderColor: "#00e676",
+};
+
+const rejectStyle = {
+  borderColor: "#ff1744",
 };
 
 export interface PendingUpload {
@@ -74,11 +107,15 @@ export const ImageUpload = () => {
 
   const onDrop = useCallback((files: Array<File>) => {
     const _pendingUploads = Array<PendingUpload>();
-    // to support multiple uploads, change slice size
+    // change slice size to support multiple uploads
     for (const file of files.slice(0, 1)) {
-      if (!file.name.endsWith(".jpg") && !file.name.endsWith(".png") && !file.name.endsWith(".jpeg")) {
+      if (
+        !file.name.endsWith(".jpg") &&
+        !file.name.endsWith(".png") &&
+        !file.name.endsWith(".jpeg")
+      ) {
         alert("Only .jpg, .jpeg, and .png files are supported");
-        return
+        return;
       }
       const fileRef = ref(storageRef, file.name);
       const _uploadTask = uploadBytesResumable(fileRef, file);
@@ -86,7 +123,7 @@ export const ImageUpload = () => {
         uploadTask: _uploadTask,
         storageRef: fileRef,
       });
-      setSnapshotRef(_uploadTask.snapshot.ref)
+      setSnapshotRef(_uploadTask.snapshot.ref);
     }
     setPendingsUploads(_pendingUploads);
   }, []);
@@ -95,43 +132,58 @@ export const ImageUpload = () => {
     if (snapshotRef) {
       getDownloadURL(snapshotRef).then((url) => {
         setDownloadUrl(url);
-      })
+      });
     }
   }, [snapshotRef]);
 
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+    useDropzone({ onDrop });
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  ) as React.CSSProperties;
+
+  const clear = () => {
+    setDownloadUrl(undefined);
+    setSnapshotRef(undefined);
+    setPendingsUploads([]);
+  };
+
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        maxWidth: 350,
+      }}
+    >
       {pendingUploads.map(({ uploadTask, storageRef }, index) => (
         <div key={index}>
           <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
         </div>
       ))}
-      {
-        downloadUrl
-          ? <img src={downloadUrl} width={100} />
-          : (
-            <Dropzone onDrop={onDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <section
-                  style={{
-                    width: 250,
-                    height: 250,
-                    border: "1px solid black",
-                  }}
-                >
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-                    <p>Max 5 at a time!</p>
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          )
-      }
-      {
-        downloadUrl && <button onClick={() => setDownloadUrl(undefined)}>Clear</button>
-      }
+      {downloadUrl ? (
+        <img src={downloadUrl} width={100} />
+      ) : (
+        <div className="dropzone container" style={{ cursor: "pointer" }}>
+          <div {...getRootProps({ style })}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop a doggo</p>
+          </div>
+        </div>
+      )}
+      {downloadUrl && (
+        <button onClick={clear} style={{ width: 80 }}>
+          Clear
+        </button>
+      )}
     </div>
   );
 };
