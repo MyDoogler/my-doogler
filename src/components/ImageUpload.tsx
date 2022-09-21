@@ -71,7 +71,7 @@ export const ImageUpload = () => {
 
   const onDrop = useCallback((files: Array<File>) => {
     const _pendingUploads = Array<PendingUpload>();
-    for (const file of files.slice(0, 5)) {
+    for (const file of files.slice(0, 1)) {
       const fileRef = ref(storageRef, file.name);
       const _uploadTask = uploadBytesResumable(fileRef, file);
       _pendingUploads.push({
@@ -83,7 +83,7 @@ export const ImageUpload = () => {
   }, []);
 
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div>
       {pendingUploads.map(({ uploadTask, storageRef }, index) => (
         <div key={index}>
           <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
