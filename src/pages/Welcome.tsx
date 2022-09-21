@@ -1,19 +1,19 @@
 import dog from '../assets/dog.svg';
 import { useFirebaseApp } from 'reactfire';
-import { Link } from 'react-router-dom';
+import { Header } from "../components/Header"
 
 export const Welcome = () => {
   const firebaseApp = useFirebaseApp();
   return (
-    <div className="App">
+    <>
+      <Header />
+      <br />
       <img src={dog} width={100} />
       <p style={{ fontSize: '3rem', marginTop: '2rem' }}>MyDoogler</p>
       Firebase Project ID:
       <pre>
         <code>{firebaseApp.options.projectId || ''}</code>
       </pre>
-      <Link to="/dooglers">See Dooglers 🐕</Link>
-      <Link to="/create">Create</Link>
-    </div>
+    </>
   );
 };
