@@ -1,3 +1,23 @@
+.links-menu {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  .links-menu {
+    flex-direction: column;
+  }
+
+  .links-menu > * {
+    margin-bottom: 1rem;
+  }
+
+  .links-menu > * {
+    text-align: left;
+  }
+}
+
 .dogpics {
   display: flex;
   justify-content: space-around;

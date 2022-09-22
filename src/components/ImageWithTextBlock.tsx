@@ -22,7 +22,8 @@ export const ImageWithTextBlock = ({ imageSrc, text }: Props) => {
           margin: "auto",
           fontSize: "3rem",
           color: "white",
-          fontWeight: 700
+          fontWeight: 700,
+          lineHeight: "3.3rem",
         }}
       >
         {text}
