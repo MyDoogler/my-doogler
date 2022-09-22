@@ -19,7 +19,7 @@ export const Create = () => {
       {
         status === "loading" ? (
           <div>Loading...</div>
-        ) : !signInCheckResult.signedIn ? ( // for now make it non-signed in only
+        ) : signInCheckResult.signedIn ? (
           <CreateDooglerForm />
         ) : (
           <>
