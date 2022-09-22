@@ -4,6 +4,8 @@ import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { query, collection } from "firebase/firestore";
 import { Spinner } from "../components/Spinner";
 import { Header } from "../components/Header";
+import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
+import dogAndOwner from "../assets/dog-and-owner.png";
 
 export const Dooglers = () => {
   const firestore = useFirestore();
@@ -12,6 +14,7 @@ export const Dooglers = () => {
   return (
     <>
       <Header />
+      <ImageWithTextBlock text="See Dooglers" imageSrc={dogAndOwner} />
       {status === "loading" ? (
         <div style={{ display: 'flex', justifyContent: 'center', height: '70vh', alignItems: 'center', flexDirection: 'column' }}>
           <Spinner />
