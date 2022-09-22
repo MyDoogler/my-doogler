@@ -9,7 +9,7 @@ export const Welcome = () => {
     <>
       <Header />
       <ImageWithTextBlock imageSrc={smartDogs} text={text} />
-      <h1 style={{ fontSize: "2rem" }}>About</h1>
+      <h1 style={{ fontSize: "2rem", marginTop: '2rem' }}>About</h1>
       <p style={{ padding: 10, maxWidth: 500, margin: "auto" }}>
         Welcome to the Doogler platform! We help connecting Dooglers with
         Googlers in our Google offices, making the life easier to the Googlers

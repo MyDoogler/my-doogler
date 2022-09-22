@@ -21,23 +21,27 @@ export const Dooglers = () => {
           <p>Loading...</p>
         </div>
       ) : dooglers?.length && dooglers.length ? (
-        dooglers.map((doogler, index) => (
-          <Doogler
-            key={index}
-            id={doogler.id}
-            imgSrc={doogler.imgSrc}
-            name={doogler.name}
-            breed={doogler.breed}
-            owner={doogler.owner}
-            office={doogler.office}
-            description={doogler?.description}
-            age={doogler.age}
-            lookingForMinder={doogler?.lookingForMinder}
-            minderApplications={doogler?.minderApplications}
-            startTime={doogler?.startTime}
-            endTime={doogler?.endTime}
-          />
-        ))
+        <div className="grid">
+          {
+            dooglers.map((doogler, index) => (
+              <Doogler
+                key={index}
+                id={doogler.id}
+                imgSrc={doogler.imgSrc}
+                name={doogler.name}
+                breed={doogler.breed}
+                owner={doogler.owner}
+                office={doogler.office}
+                description={doogler?.description}
+                age={doogler.age}
+                lookingForMinder={doogler?.lookingForMinder}
+                minderApplications={doogler?.minderApplications}
+                startTime={doogler?.startTime}
+                endTime={doogler?.endTime}
+              />
+            ))
+          }
+        </div>
       ) : (
         <>
           <p>

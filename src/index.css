@@ -16,12 +16,28 @@
   }
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .doogler__container {
-  display: flex;
-  flex-direction: row;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
   padding: 3rem;
-  align-items: flex-start;
-  max-width: 800px;
+  max-width: 30vw;
+  display: flex;
 }
 
 .doogler__name {
