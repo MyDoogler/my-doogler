@@ -5,7 +5,7 @@ import { query, collection } from "firebase/firestore";
 import { Spinner } from "../components/Spinner";
 import { Header } from "../components/Header";
 import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
-import dogAndOwner from "../assets/dog-and-owner.png";
+import dogAndOwner from "../assets/header.jpg";
 
 export const Dooglers = () => {
   const firestore = useFirestore();

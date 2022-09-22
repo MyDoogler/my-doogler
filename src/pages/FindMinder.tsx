@@ -3,6 +3,7 @@ import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
 import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire"
 import { query, collection, where, setDoc, DocumentData, doc } from "firebase/firestore";
 import { Doogler } from "../components/Doogler";
+import smartDogs from "../assets/header.jpg";
 
 export const FindMinder = () => {
   const firestore = useFirestore();
@@ -20,9 +21,7 @@ export const FindMinder = () => {
     <>
       <Header />
       <ImageWithTextBlock
-        imageSrc={
-          "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?ixlib=rb-1.2.1&q=80&cs=tinysrgb&fm=jpg&crop=entropy&w=2000"
-        }
+        imageSrc={smartDogs}
         text={"Find Minder"}
       />
       {status === "loading" || userStatus === "loading" ? <p>Loading...</p> : (

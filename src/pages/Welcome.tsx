@@ -1,6 +1,6 @@
 import { Header } from "../components/Header";
 import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
-import smartDogs from "../assets/smart-dogs.png";
+import smartDogs from "../assets/header.jpg";
 import { Login } from "../components/Login";
 
 export const Welcome = () => {
