@@ -16,6 +16,9 @@ import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 import { getFunctions } from "firebase/functions";
 
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+
 import { Welcome } from "./pages/Welcome";
 import { Dooglers } from "./pages/Dooglers";
 import { Create } from "./pages/Create";
@@ -54,7 +57,9 @@ function Router() {
 function App() {
   return (
     <FirebaseProvider>
-      <Router />
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <Router />
+      </LocalizationProvider>
     </FirebaseProvider>
   );
 }
