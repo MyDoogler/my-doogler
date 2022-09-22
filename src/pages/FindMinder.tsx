@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-import { Header } from "../components/Header";
-import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
-import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire"
-import { query, collection, where, setDoc, DocumentData, doc } from "firebase/firestore";
-import { Doogler } from "../components/Doogler";
-import smartDogs from "../assets/header.jpg";
-=======
 import { useState } from 'react';
 import { Header } from '../components/Header';
 import { ImageWithTextBlock } from '../components/ImageWithTextBlock';
@@ -21,7 +13,7 @@ import {
 import { Doogler } from '../components/Doogler';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
->>>>>>> Stashed changes
+import smartDogs from '../assets/smart-dogs.png';
 
 export const FindMinder = () => {
   const firestore = useFirestore();
@@ -65,15 +57,8 @@ export const FindMinder = () => {
     <>
       <Header />
       <ImageWithTextBlock
-<<<<<<< Updated upstream
         imageSrc={smartDogs}
         text={"Find Minder"}
-=======
-        imageSrc={
-          'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?ixlib=rb-1.2.1&q=80&cs=tinysrgb&fm=jpg&crop=entropy&w=2000'
-        }
-        text={'Find Minder'}
->>>>>>> Stashed changes
       />
       {status === 'loading' || userStatus === 'loading' ? (
         <p>Loading...</p>
@@ -116,7 +101,7 @@ export const FindMinder = () => {
             </div>
             {
               doogler.lookingForMinder ? (
-                <p>✅Already posted</p>
+                <p>✅ Already posted</p>
               ) : (
                 <button onClick={() => findMinder(doogler)}>
                   Find Minder for {doogler.name}
