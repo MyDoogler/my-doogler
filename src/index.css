@@ -1,3 +1,37 @@
+.doogler__description-box {
+  overflow: auto;
+  display: flex;
+  max-width: 15vw;
+  max-height: 20vh;
+  overflow: scroll;
+}
+
+@media (max-width: 1200px) {
+  .doogler__description-box {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.find-minders__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; 
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.find-minders__container {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 1200px) {
+  .find-minders__container {
+    flex-direction: column;
+  }
+}
+
 .links-menu {
   flex: 2;
   display: flex;

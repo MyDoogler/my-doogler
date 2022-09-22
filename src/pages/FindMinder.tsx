@@ -53,6 +53,29 @@ export const FindMinder = () => {
     return res === 'NaN' ? '' : `${res} hours`;
   }
 
+  const FindMinderForm = () => (
+    <div className="find-minder__form">
+      <DateTimePicker
+        value={startDate}
+        onChange={(date) => setStartDate(date)}
+        renderInput={(props) => <TextField {...props} />}
+        label="Start Date"
+      />
+      <DateTimePicker
+        value={startDate}
+        onChange={(date) => setEndDate(date)}
+        renderInput={(props) => <TextField {...props} />}
+        label="End Date"
+      />
+      {
+        endDate && startDate &&
+        <div style={{ marginTop: '0.45rem' }}>
+          Total Minding time: {totalMindingTime(startDate, endDate)}
+        </div>
+      }
+    </div>
+  )
+
   return (
     <>
       <Header />
@@ -67,7 +90,7 @@ export const FindMinder = () => {
       ) : (
         dooglers?.map((doogler, index) => (
           <>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div className="find-minders__container">
               <Doogler
                 key={index}
                 id={doogler.id}
@@ -83,36 +106,19 @@ export const FindMinder = () => {
                 minderApplications={doogler?.minderApplications}
                 age={doogler.age}
               />
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '2rem', paddingBottom: '2rem', marginLeft: '25px' }}>
-                <DateTimePicker
-                  value={startDate}
-                  onChange={(date) => setStartDate(date)}
-                  renderInput={(props) => <TextField {...props} />}
-                  label="Start Date"
-                />
-                <DateTimePicker
-                  value={startDate}
-                  onChange={(date) => setEndDate(date)}
-                  renderInput={(props) => <TextField {...props} />}
-                  label="End Date"
-                />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1', justifyContent: 'center' }}>
+                <FindMinderForm />
                 {
-                  endDate && startDate &&
-                  <div>
-                    Total Minding time: {totalMindingTime(startDate, endDate)}
-                  </div>
+                  doogler.lookingForMinder ? (
+                    <p>✅ Already posted</p>
+                  ) : (
+                    <button onClick={() => findMinder(doogler)} style={{ marginTop: '3rem' }}>
+                      Find Minder for {doogler.name}
+                    </button>
+                  )
                 }
               </div>
             </div>
-            {
-              doogler.lookingForMinder ? (
-                <p>✅ Already posted</p>
-              ) : (
-                <button onClick={() => findMinder(doogler)}>
-                  Find Minder for {doogler.name}
-                </button>
-              )
-            }
             {doogler.minderApplications && doogler.minderApplications.length > 0 && (
               <>
                 <p>Respondents:</p>

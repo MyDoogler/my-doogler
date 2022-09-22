@@ -110,7 +110,10 @@ export const Doogler = (props: DooglerProps) => {
         </div>
         <div className="doogler__property doogler__description">
           <b>Description:</b>
-          <br /> {props.description || "-"}
+          <br />
+          <span className="doogler__description-box">
+            {props?.description || "-"}
+          </span>
         </div>
         <div>
           {props?.lookingForMinder && props.startTime && props.endTime && user && (
@@ -153,6 +156,6 @@ export const Doogler = (props: DooglerProps) => {
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
