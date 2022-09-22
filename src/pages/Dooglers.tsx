@@ -24,6 +24,7 @@ export const Dooglers = () => {
         dooglers.map((doogler, index) => (
           <Doogler
             key={index}
+            id={doogler.id}
             imgSrc={doogler.imgSrc}
             name={doogler.name}
             breed={doogler.breed}
@@ -31,6 +32,10 @@ export const Dooglers = () => {
             office={doogler.office}
             description={doogler?.description}
             age={doogler.age}
+            lookingForMinder={doogler?.lookingForMinder}
+            minderApplications={doogler?.minderApplications}
+            startTime={doogler?.startTime}
+            endTime={doogler?.endTime}
           />
         ))
       ) : (

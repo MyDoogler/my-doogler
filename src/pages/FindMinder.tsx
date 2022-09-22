@@ -41,11 +41,10 @@ export const FindMinder = () => {
       return;
     }
     await setDoc(doc(collection(firestore, 'dogs'), doogler.id), {
-      ...doogler,
       lookingForMinder: true,
       startTime: toUnix(startDate),
       endTime: toUnix(endDate),
-    });
+    }, { merge: true });
   };
 
   function totalMindingTime(startDate: Date, endDate: Date) {
@@ -70,12 +69,17 @@ export const FindMinder = () => {
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Doogler
                 key={index}
+                id={doogler.id}
                 imgSrc={doogler.imgSrc}
                 name={doogler.name}
                 breed={doogler.breed}
                 owner={doogler.owner}
                 office={doogler.office}
                 description={doogler?.description}
+                startTime={doogler?.startTime}
+                endTime={doogler?.endTime}
+                lookingForMinder={doogler?.lookingForMinder}
+                minderApplications={doogler?.minderApplications}
                 age={doogler.age}
               />
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '2rem', paddingBottom: '2rem', marginLeft: '25px' }}>
