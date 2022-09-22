@@ -14,6 +14,7 @@ import { Doogler } from '../components/Doogler';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
 import smartDogs from '../assets/header.jpg';
+import { MinderApplication } from "../components/Doogler"
 
 export const FindMinder = () => {
   const firestore = useFirestore();
@@ -112,6 +113,18 @@ export const FindMinder = () => {
                 </button>
               )
             }
+            {doogler.minderApplications && doogler.minderApplications.length > 0 && (
+              <>
+                <p>Respondents:</p>
+                {doogler.minderApplications.map((application: MinderApplication) => (
+                  <div key={application.id}>
+                    <p>{application.status}</p>
+                    <p>{application.message}</p>
+                    <p>{application.minderEmail}</p>
+                  </div>
+                ))}
+              </>
+            )}
           </>
         ))
       )}

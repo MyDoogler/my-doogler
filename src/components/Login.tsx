@@ -1,6 +1,7 @@
 import { EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { StyledFirebaseAuth } from "react-firebaseui";
-import { useAuth } from "reactfire";
+import { useAuth, useSigninCheck } from "reactfire";
+import { Spinner } from "./Spinner";
 
 const uiConfig = {
   signInFlow: "popup",
@@ -12,5 +13,12 @@ const uiConfig = {
 
 export function Login() {
   const auth = useAuth();
-  return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />;
+  const { status, data: user } = useSigninCheck();
+  if (status === "loading") {
+    return <Spinner />
+  }
+  if (user.signedIn) {
+    return
+  }
+  return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
 }

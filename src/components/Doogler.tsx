@@ -6,7 +6,7 @@ import { useFirestore } from "reactfire";
 import { setDoc, doc, collection } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 
-interface MinderApplication {
+export interface MinderApplication {
   id: string;
   message: string;
   status: string;
