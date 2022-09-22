@@ -30,6 +30,7 @@ export const Header = () => {
         <Link to="/">Home</Link>
         <Link to="/dooglers">Dooglers</Link>
         <Link to="/create">Create</Link>
+        <Link to="/find-minder">Find Minder</Link>
       </div>
       <div style={{ flex: "1", display: 'flex', justifyContent: 'center' }}>
         {

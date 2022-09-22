@@ -19,6 +19,7 @@ import { getFunctions } from "firebase/functions";
 import { Welcome } from "./pages/Welcome";
 import { Dooglers } from "./pages/Dooglers";
 import { Create } from "./pages/Create";
+import { FindMinder } from "./pages/FindMinder";
 
 function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const firebaseApp = useFirebaseApp();
@@ -44,6 +45,7 @@ function Router() {
         <Route path="/" element={<Welcome />} />
         <Route path="/dooglers" element={<Dooglers />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/find-minder" element={<FindMinder />} />
       </Routes>
     </BrowserRouter>
   );

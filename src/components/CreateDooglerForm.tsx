@@ -3,7 +3,8 @@ import { useUser } from "reactfire";
 import { ImageUpload } from "../components/ImageUpload";
 import { Spinner } from "./Spinner";
 import { useFirestore } from "reactfire";
-import { addDoc, collection } from "firebase/firestore";
+import { setDoc, collection, doc } from "firebase/firestore";
+import { v4 as uuid } from "uuid";
 
 export const CreateDooglerForm = () => {
   const firestore = useFirestore();
@@ -33,7 +34,9 @@ export const CreateDooglerForm = () => {
       return;
     }
     setLoading(true);
+    const id = uuid()
     const dog = {
+      id,
       breed,
       age,
       description,
@@ -44,7 +47,8 @@ export const CreateDooglerForm = () => {
     };
     console.log(dog)
     try {
-      await addDoc(collection(firestore, 'dogs'), dog)
+      // TODO test if it adds the key ID to the dog object and its the same
+      await setDoc(doc(collection(firestore, "dogs"), id), dog)
       alert("Doogler created successfully");
       setSuccess(true);
     } catch (error) {
