@@ -21,7 +21,7 @@ export const Dooglers = () => {
           <p>Loading...</p>
         </div>
       ) : dooglers?.length && dooglers.length ? (
-        <div className="grid">
+        <div className="dooglers__container">
           {
             dooglers.map((doogler, index) => (
               <Doogler

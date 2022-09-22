@@ -16,35 +16,50 @@
   }
 }
 
-.grid {
+.dooglers__container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
 }
 
-@media (max-width: 800px) {
-  .grid {
+@media (max-width: 1200px) {
+  .dooglers__container {
     grid-template-columns: 1fr;
   }
 }
 
 .doogler__container {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 1rem;
   padding: 3rem;
-  max-width: 30vw;
   display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 800px) {
+  .doogler__container {
+    margin-top: 1rem;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0.6rem;
+  }
 }
 
 .doogler__name {
-  font-size: 2rem;
+  font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
   margin-top: 0.5rem;
+}
+
+@media (max-width: 800px) {
+  .doogler__name {
+    margin-top: 1rem;
+    align-self: center;
+  }
 }
 
 .doogler__info {
@@ -52,6 +67,11 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+}
+
+.dooger__property {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .upload-form {

@@ -80,6 +80,7 @@ export const Doogler = (props: DooglerProps) => {
     alert('Application sent!');
   }
 
+
   return (
     <div className="doogler__container">
       <div className="doogler__image">
@@ -96,16 +97,16 @@ export const Doogler = (props: DooglerProps) => {
           {props.name}
         </div>
         <div className="doogler__property">
-          <b>Breed:</b> {props.breed}
+          <b>Breed:</b><br /> {props.breed}
         </div>
         <div className="doogler__property">
-          <b>Age:</b> {props.age}
+          <b>Age:</b> {'🍖'.repeat(props.age)}
         </div>
         <div className="doogler__property">
-          <b>Owner:</b> {props.owner}
+          <b>Owner:</b> <br />{props.owner}
         </div>
         <div className="doogler__property">
-          <b>Office:</b> {props.office}
+          <b>Office:</b> <br />{props.office}
         </div>
         <div className="doogler__property doogler__description">
           <b>Description:</b>
