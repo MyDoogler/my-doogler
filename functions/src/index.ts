@@ -3,6 +3,9 @@
 import * as functions from "firebase-functions";
 // import * as admin from "firebase-admin";
 import * as nodemailer from "nodemailer";
+// Imports the Google Cloud client library
+import {PubSub} from "@google-cloud/pubsub";
+
 // Configure the email transport using the default SMTP transport and a GMail account.
 // For other types of transports such as Sendgrid see https://nodemailer.com/transports/
 // TODO: Configure the `gmail.email` and `gmail.password` Google Cloud environment variables.
@@ -15,6 +18,26 @@ const mailTransport = nodemailer.createTransport({
     pass: "nalygbvnlwfxjpam",
   },
 });
+
+/**
+* Placeholder for documentation
+* @param {any} data
+* @param {any} pubSubClient
+* @param {any} topicNameOrId
+*/
+async function publishMessage(data:any, pubSubClient:any, topicNameOrId:any) {
+// Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
+  const dataBuffer = Buffer.from(data);
+  try {
+    const messageId = await pubSubClient
+        .topic(topicNameOrId)
+        .publishMessage({data: dataBuffer});
+    console.log(`Message ${messageId} published.`);
+  } catch (error:any) {
+    console.error(`Received error while publishing: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
 
 exports.sendEmailDoogler = functions.https.onRequest(async (req, res) => {
   // Grab the text parameter.
@@ -45,34 +68,28 @@ exports.sendEmailDoogler = functions.https.onRequest(async (req, res) => {
   // Send back a message that we've successfully written the message
   res.json({result: "Function is finishing either succesful or with error"});
 });
-/*
-admin.initializeApp();
-// Take the text parameter passed to this HTTP endpoint and insert it into
-// Firestore under the path /messages/:documentId/original
-exports.addMessage = functions.https.onRequest(async (req, res) => {
-// Grab the text parameter.
-  const original = req.query.text;
-  // Push the new message into Firestore using the Firebase Admin SDK.
-  const writeResult = await admin.firestore().collection("messages").add({original: original});
+
+exports.createTopicPublish = functions.https.onRequest(async (req, res) => {
+  /**
+  * TODO(developer): Uncomment these variables before running the sample.
+   */
+  const topicNameOrId = "dooglerTestTopic";
+  const data = JSON.stringify({foo: "bar"});
+
+  // Creates a client; cache this for further use
+  const pubSubClient = new PubSub();
+
+  try {
+    await publishMessage(data, pubSubClient, topicNameOrId);
+    functions.logger.log(
+        "Function has been run"
+    );
+  } catch (error) {
+    functions.logger.error(
+        "There was an error while sending the email:",
+        error
+    );
+  }
   // Send back a message that we've successfully written the message
-  res.json({result: `Message with ID: ${writeResult.id} added.`});
+  res.json({result: "Function is finishing either succesful or with error"});
 });
-
-// Listens for new messages added to /messages/:documentId/original and creates an
-// uppercase version of the message to /messages/:documentId/uppercase
-exports.makeUppercase = functions.firestore.document("/messages/{documentId}/")
-    .onCreate((snap, context) => {
-      // Grab the current value of what was written to Firestore.
-      const original = snap.data().original;
-
-      // Access the parameter `{documentId}` with `context.params`
-      functions.logger.log("Uppercasing", context.params.documentId, original);
-
-      const uppercase = original.toUpperCase();
-
-      // You must return a Promise when performing asynchronous tasks inside a Functions such as
-      // writing to Firestore.
-      // Setting an 'uppercase' field in Firestore document returns a Promise.
-      return snap.ref.set({uppercase}, {merge: true});
-    });
-*/
