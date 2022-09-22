@@ -17,55 +17,33 @@ export const Doogler = (props: DooglerProps) => {
     ref(storage, props.imgSrc)
   );
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        padding: "3rem",
-        alignItems: "flex-start",
-        maxWidth: "800px",
-      }}
-    >
-      <div>
+    <div className="doogler__container">
+      <div className="doogler__image">
         {status !== "loading" && (
           <img
             src={src}
-            alt="dogs-stitch"
-            style={{ maxWidth: 350, marginRight: 30, maxHeight: 350 }}
+            alt="dog-pic"
+            style={{ maxWidth: 300 }}
           />
         )}
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          textAlign: "left",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "2rem",
-            fontWeight: 700,
-            marginBottom: "1rem",
-            marginTop: "0.5rem",
-          }}
-        >
+      <div className="doogler__info">
+        <div className="doogler__name">
           {props.name}
         </div>
-        <div style={{ marginTop: "5px" }}>
+        <div className="doogler__property">
           <b>Breed:</b> {props.breed}
         </div>
-        <div style={{ marginTop: "5px" }}>
+        <div className="doogler__property">
           <b>Age:</b> {props.age}
         </div>
-        <div style={{ marginTop: "5px" }}>
+        <div className="doogler__property">
           <b>Owner:</b> {props.owner}
         </div>
-        <div style={{ marginTop: "5px" }}>
+        <div className="doogler__property">
           <b>Office:</b> {props.office}
         </div>
-        <div style={{ marginTop: "5px" }}>
+        <div className="doogler__property doogler__description">
           <b>Description:</b>
           <br /> {props.description || "-"}
         </div>
