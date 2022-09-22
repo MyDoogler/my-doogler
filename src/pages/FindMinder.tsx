@@ -13,7 +13,7 @@ import {
 import { Doogler } from '../components/Doogler';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
-import smartDogs from '../assets/smart-dogs.png';
+import smartDogs from '../assets/header.jpg';
 
 export const FindMinder = () => {
   const firestore = useFirestore();
@@ -78,7 +78,7 @@ export const FindMinder = () => {
                 description={doogler?.description}
                 age={doogler.age}
               />
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '2rem', paddingBottom: '2rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '2rem', paddingBottom: '2rem', marginLeft: '25px' }}>
                 <DateTimePicker
                   value={startDate}
                   onChange={(date) => setStartDate(date)}

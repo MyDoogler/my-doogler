@@ -38,3 +38,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.doogler__info {
+  margin-left: 30px;
+}
+
+.doogler__container {
+  border: 2px;
+  border-color: lightslategray;
+  border-style: solid;
+  margin-top: 5px;
+}
