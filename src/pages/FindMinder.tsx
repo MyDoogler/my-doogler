@@ -13,8 +13,9 @@ import {
 import { Doogler } from '../components/Doogler';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
+
 import smartDogs from '../assets/header.jpg';
-import { MinderApplication } from "../components/Doogler"
+import { MinderApplication, MinderApplicationProps } from '../components/MinderApplication';
 
 export const FindMinder = () => {
   const firestore = useFirestore();
@@ -107,30 +108,40 @@ export const FindMinder = () => {
                 age={doogler.age}
               />
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1', justifyContent: 'center' }}>
-                <FindMinderForm />
-                {
-                  doogler.lookingForMinder ? (
-                    <p>✅ Already posted</p>
-                  ) : (
-                    <button onClick={() => findMinder(doogler)} style={{ marginTop: '3rem' }}>
-                      Find Minder for {doogler.name}
-                    </button>
-                  )
-                }
+                {!doogler.lookingForMinder && <FindMinderForm />}
+                <div style={{ marginBottom: "1rem" }}>
+                  {
+                    doogler.lookingForMinder ? (
+                      <p>✅ Posted</p>
+                    ) : (
+                      <button onClick={() => findMinder(doogler)} style={{ marginTop: '3rem' }}>
+                        Find Minder for {doogler.name}
+                      </button>
+                    )
+                  }
+                </div>
+                {doogler.minderApplications && doogler.minderApplications.length > 0 ? (
+                  <table className="applications-table">
+                    <thead>
+                      <tr>
+                        <th>Reply</th>
+                        <th>Status</th>
+                        <th>Minder Email</th>
+                      </tr>
+                    </thead>
+                    {doogler.minderApplications.map((application: MinderApplicationProps) => (
+                      <MinderApplication {...application} />
+                    ))}
+                  </table>
+                ) : (
+                  <>
+                    {
+                      doogler.lookingForMinder && <p>No applications yet</p>
+                    }
+                  </>
+                )}
               </div>
             </div>
-            {doogler.minderApplications && doogler.minderApplications.length > 0 && (
-              <>
-                <p>Respondents:</p>
-                {doogler.minderApplications.map((application: MinderApplication) => (
-                  <div key={application.id}>
-                    <p>{application.status}</p>
-                    <p>{application.message}</p>
-                    <p>{application.minderEmail}</p>
-                  </div>
-                ))}
-              </>
-            )}
           </>
         ))
       )}

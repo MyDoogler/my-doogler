@@ -5,15 +5,7 @@ import { Spinner } from "./Spinner";
 import { useFirestore } from "reactfire";
 import { setDoc, doc, collection } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
-
-export interface MinderApplication {
-  id: string;
-  message: string;
-  status: string;
-  dooglerId: string;
-  minderId: string;
-  minderEmail: string;
-}
+import { MinderApplicationProps } from "./MinderApplication";
 
 export interface DooglerProps {
   id: string;
@@ -29,7 +21,7 @@ export interface DooglerProps {
   lookingForMinder?: boolean; // true
   startTime?: number;
   endTime?: number;
-  minderApplications?: Array<MinderApplication>;
+  minderApplications?: Array<MinderApplicationProps>;
 }
 
 function unixToDate(unix: number) {

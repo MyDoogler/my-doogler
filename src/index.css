@@ -1,9 +1,29 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+  border-right: 1px solid #ddd;
+}
+
 .doogler__description-box {
   overflow: auto;
   display: flex;
   max-width: 15vw;
   max-height: 20vh;
-  overflow: scroll;
+  overflow: auto;
 }
 
 @media (max-width: 1200px) {
