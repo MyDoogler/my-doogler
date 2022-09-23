@@ -3,7 +3,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as nodemailer from "nodemailer";
-import {firestore} from "firebase-admin";
+// import {firestore} from "firebase-admin";
 
 admin.initializeApp();
 // Configure the email transport using the default SMTP transport and a GMail account.
