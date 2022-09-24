@@ -86,7 +86,7 @@ export const Doogler = (props: DooglerProps) => {
       </div>
       <div className="doogler__info">
         <div className="doogler__name">
-          {props.name}
+          {props.name.slice(0, 13)}
         </div>
         <div className="doogler__property">
           <b>Breed:</b><br /> {props.breed}
