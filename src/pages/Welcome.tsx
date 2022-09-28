@@ -16,6 +16,12 @@ export const Welcome = () => {
         with dogs and more exciting office visits to our Googlers who love dogs!
         To join the program, all you need to do is to click join and try it out
         yourself!
+        <i>
+          <p>
+            Note: the site is in alpha phase, some things might not work. If you
+            have any questions or remarks, please contact us at <a href="mailto:mydoogler@google.com">mydoogler@google.com</a>
+          </p>
+        </i>
       </p>
       <Login />
     </>
