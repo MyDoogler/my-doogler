@@ -7,12 +7,19 @@ export interface MinderApplicationProps {
   minderEmail: string;
 }
 
-export const MinderApplication = ({ status, minderEmail }: MinderApplicationProps) => {
+export const MinderApplication = ({
+  status,
+  minderEmail,
+}: MinderApplicationProps) => {
   return (
     <tr>
-      <td><a href={`mailto:${minderEmail}`}><button>📧</button></a></td>
+      <td>
+        <a href={`mailto:${minderEmail}`}>
+          <button>📧</button>
+        </a>
+      </td>
       <td>{status}</td>
       <td>{minderEmail}</td>
     </tr>
-  )
-}
+  );
+};

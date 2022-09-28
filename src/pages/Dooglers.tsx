@@ -16,31 +16,37 @@ export const Dooglers = () => {
       <Header />
       <ImageWithTextBlock text="See Dooglers" imageSrc={dogAndOwner} />
       {status === "loading" ? (
-        <div style={{ display: 'flex', justifyContent: 'center', height: '70vh', alignItems: 'center', flexDirection: 'column' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "70vh",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           <Spinner />
           <p>Loading...</p>
         </div>
       ) : dooglers?.length && dooglers.length ? (
         <div className="dooglers__container">
-          {
-            dooglers.map((doogler, index) => (
-              <Doogler
-                key={index}
-                id={doogler.id}
-                imgSrc={doogler.imgSrc}
-                name={doogler.name}
-                breed={doogler.breed}
-                owner={doogler.owner}
-                office={doogler.office}
-                description={doogler?.description}
-                age={doogler.age}
-                lookingForMinder={doogler?.lookingForMinder}
-                minderApplications={doogler?.minderApplications}
-                startTime={doogler?.startTime}
-                endTime={doogler?.endTime}
-              />
-            ))
-          }
+          {dooglers.map((doogler, index) => (
+            <Doogler
+              key={index}
+              id={doogler.id}
+              imgSrc={doogler.imgSrc}
+              name={doogler.name}
+              breed={doogler.breed}
+              owner={doogler.owner}
+              office={doogler.office}
+              description={doogler?.description}
+              age={doogler.age}
+              lookingForMinder={doogler?.lookingForMinder}
+              minderApplications={doogler?.minderApplications}
+              startTime={doogler?.startTime}
+              endTime={doogler?.endTime}
+            />
+          ))}
         </div>
       ) : (
         <>

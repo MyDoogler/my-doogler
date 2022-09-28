@@ -9,8 +9,16 @@ export const Welcome = () => {
     <>
       <Header />
       <ImageWithTextBlock imageSrc={smartDogs} text={text} />
-      <h1 style={{ fontSize: "2rem", marginTop: '2rem' }}>About</h1>
-      <p style={{ padding: 10, maxWidth: 500, margin: "auto", paddingLeft: 20, paddingRight: 20 }}>
+      <h1 style={{ fontSize: "2rem", marginTop: "2rem" }}>About</h1>
+      <p
+        style={{
+          padding: 10,
+          maxWidth: 500,
+          margin: "auto",
+          paddingLeft: 20,
+          paddingRight: 20,
+        }}
+      >
         Welcome to the Doogler platform! We help connecting Dooglers with
         Googlers in our Google offices, making the life easier to the Googlers
         with dogs and more exciting office visits to our Googlers who love dogs!
@@ -19,10 +27,9 @@ export const Welcome = () => {
         <i>
           <p>
             Note: the site is in alpha phase, some things might not work. If you
-            have any questions or remarks, please contact us at <a href="mailto:mydoogler@google.com">mydoogler@google.com</a>
-            <p>
-              Be sure not to upload any personal/sensitive data!
-            </p>
+            have any questions or remarks, please contact us at{" "}
+            <a href="mailto:mydoogler@google.com">mydoogler@google.com</a>
+            <p>Be sure not to upload any personal/sensitive data!</p>
           </p>
         </i>
       </p>

@@ -12,7 +12,8 @@ tr {
   border-bottom: 1px solid #ddd;
 }
 
-td, th {
+td,
+th {
   text-align: left;
   padding: 8px;
   border-right: 1px solid #ddd;
@@ -36,7 +37,7 @@ td, th {
 .find-minders__form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around; 
+  justify-content: space-around;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
@@ -150,7 +151,7 @@ td, th {
 
 .upload-form {
   display: flex;
-  flexDirection: row;
+  flexdirection: row;
   min-height: 40vh;
   padding: 2rem;
   border: 1px solid #ccc;
@@ -166,7 +167,7 @@ td, th {
 
   .upload-form__upload {
     margin-bottom: 1rem;
-    margin-right: 0rem!important;
+    margin-right: 0rem !important;
   }
 }
 
@@ -196,7 +197,7 @@ input {
   border-radius: 5px;
   margin-bottom: 1rem;
 }
- 
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -254,7 +255,6 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
 
 /* below media query can be a feature to also support dark mode */
 /*@media (prefers-color-scheme: light) {

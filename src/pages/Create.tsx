@@ -11,22 +11,19 @@ export const Create = () => {
   return (
     <>
       <Header />
-      <ImageWithTextBlock
-        imageSrc={smartDogs}
-        text={"Add a Doogler"}
-      />
-      {
-        status === "loading" ? (
-          <div>Loading...</div>
-        ) : signInCheckResult.signedIn ? (
-          <CreateDooglerForm />
-        ) : (
-          <>
-            <div style={{ marginTop: 10 }}>You must be signed in to create a doogler</div>
-            <Login />
-          </>
-        )
-      }
+      <ImageWithTextBlock imageSrc={smartDogs} text={"Add a Doogler"} />
+      {status === "loading" ? (
+        <div>Loading...</div>
+      ) : signInCheckResult.signedIn ? (
+        <CreateDooglerForm />
+      ) : (
+        <>
+          <div style={{ marginTop: 10 }}>
+            You must be signed in to create a doogler
+          </div>
+          <Login />
+        </>
+      )}
     </>
   );
 };

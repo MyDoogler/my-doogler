@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Header } from '../components/Header';
-import { ImageWithTextBlock } from '../components/ImageWithTextBlock';
-import { useFirestore, useFirestoreCollectionData, useUser } from 'reactfire';
+import { useState } from "react";
+import { Header } from "../components/Header";
+import { ImageWithTextBlock } from "../components/ImageWithTextBlock";
+import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire";
 import {
   query,
   collection,
@@ -9,20 +9,23 @@ import {
   setDoc,
   DocumentData,
   doc,
-} from 'firebase/firestore';
-import { Doogler } from '../components/Doogler';
-import { DateTimePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
+} from "firebase/firestore";
+import { Doogler } from "../components/Doogler";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import { TextField } from "@mui/material";
 
-import smartDogs from '../assets/header.jpg';
-import { MinderApplication, MinderApplicationProps } from '../components/MinderApplication';
+import smartDogs from "../assets/header.jpg";
+import {
+  MinderApplication,
+  MinderApplicationProps,
+} from "../components/MinderApplication";
 
 export const FindMinder = () => {
   const firestore = useFirestore();
   const { status: userStatus, data: user } = useUser();
   const dooglersQuery = query(
-    collection(firestore, 'dogs'),
-    where('owner', '==', user?.email || ''),
+    collection(firestore, "dogs"),
+    where("owner", "==", user?.email || "")
   );
   const { status, data: dooglers } = useFirestoreCollectionData(dooglersQuery);
 
@@ -35,23 +38,27 @@ export const FindMinder = () => {
 
   const findMinder = async (doogler: DocumentData) => {
     if (!startDate || !endDate) {
-      alert('Please select a valid start and end date');
+      alert("Please select a valid start and end date");
       return;
     }
     if (totalMindingTime(startDate, endDate) === "") {
-      alert('Please select a valid start and end date');
+      alert("Please select a valid start and end date");
       return;
     }
-    await setDoc(doc(collection(firestore, 'dogs'), doogler.id), {
-      lookingForMinder: true,
-      startTime: toUnix(startDate),
-      endTime: toUnix(endDate),
-    }, { merge: true });
+    await setDoc(
+      doc(collection(firestore, "dogs"), doogler.id),
+      {
+        lookingForMinder: true,
+        startTime: toUnix(startDate),
+        endTime: toUnix(endDate),
+      },
+      { merge: true }
+    );
   };
 
   function totalMindingTime(startDate: Date, endDate: Date) {
-    const res = ((toUnix(endDate) - toUnix(startDate)) / 60 / 60).toFixed(2)
-    return res === 'NaN' ? '' : `${res} hours`;
+    const res = ((toUnix(endDate) - toUnix(startDate)) / 60 / 60).toFixed(2);
+    return res === "NaN" ? "" : `${res} hours`;
   }
 
   const FindMinderForm = () => (
@@ -68,23 +75,19 @@ export const FindMinder = () => {
         renderInput={(props) => <TextField {...props} />}
         label="End Date"
       />
-      {
-        endDate && startDate &&
-        <div style={{ marginTop: '0.45rem' }}>
+      {endDate && startDate && (
+        <div style={{ marginTop: "0.45rem" }}>
           Total Minding time: {totalMindingTime(startDate, endDate)}
         </div>
-      }
+      )}
     </div>
-  )
+  );
 
   return (
     <>
       <Header />
-      <ImageWithTextBlock
-        imageSrc={smartDogs}
-        text={"Find Minder"}
-      />
-      {status === 'loading' || userStatus === 'loading' ? (
+      <ImageWithTextBlock imageSrc={smartDogs} text={"Find Minder"} />
+      {status === "loading" || userStatus === "loading" ? (
         <p>Loading...</p>
       ) : dooglers.length === 0 ? (
         <p>You have no dooglers</p>
@@ -107,20 +110,30 @@ export const FindMinder = () => {
                 minderApplications={doogler?.minderApplications}
                 age={doogler.age}
               />
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1', justifyContent: 'center' }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  flex: "1",
+                  justifyContent: "center",
+                }}
+              >
                 {!doogler.lookingForMinder && <FindMinderForm />}
                 <div style={{ marginBottom: "1rem" }}>
-                  {
-                    doogler.lookingForMinder ? (
-                      <p>✅ Posted</p>
-                    ) : (
-                      <button onClick={() => findMinder(doogler)} style={{ marginTop: '3rem' }}>
-                        Find Minder for {doogler.name}
-                      </button>
-                    )
-                  }
+                  {doogler.lookingForMinder ? (
+                    <p>✅ Posted</p>
+                  ) : (
+                    <button
+                      onClick={() => findMinder(doogler)}
+                      style={{ marginTop: "3rem" }}
+                    >
+                      Find Minder for {doogler.name}
+                    </button>
+                  )}
                 </div>
-                {doogler.minderApplications && doogler.minderApplications.length > 0 ? (
+                {doogler.minderApplications &&
+                doogler.minderApplications.length > 0 ? (
                   <table className="applications-table">
                     <thead>
                       <tr>
@@ -129,16 +142,14 @@ export const FindMinder = () => {
                         <th>Minder Email</th>
                       </tr>
                     </thead>
-                    {doogler.minderApplications.map((application: MinderApplicationProps) => (
-                      <MinderApplication {...application} />
-                    ))}
+                    {doogler.minderApplications.map(
+                      (application: MinderApplicationProps) => (
+                        <MinderApplication {...application} />
+                      )
+                    )}
                   </table>
                 ) : (
-                  <>
-                    {
-                      doogler.lookingForMinder && <p>No applications yet</p>
-                    }
-                  </>
+                  <>{doogler.lookingForMinder && <p>No applications yet</p>}</>
                 )}
               </div>
             </div>

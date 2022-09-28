@@ -10,8 +10,8 @@ Cloud Technical Residency programme.
 
 ### Requirements
 
-* NodeJS
-* yarn (could be installed with `npm i -g yarn`)
+- NodeJS
+- yarn (could be installed with `npm i -g yarn`)
 
 ### Setup
 

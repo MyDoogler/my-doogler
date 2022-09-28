@@ -64,7 +64,6 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
 });
 */
 
-
 // Listens for new messages added to /messages/:documentId/original and creates an
 // uppercase version of the message to /messages/:documentId/uppercase
 /* exports.newDogAdded = functions.firestore.document("/dogs/{documentId}/")
@@ -101,20 +100,21 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
       functions.logger.log("Function is finishing either succesful or with error");
     }); */
 
+exports.newDogAdded = functions.firestore
+  .document("/dogs/{documentId}")
+  .onUpdate(async (snap, _) => {
+    // check if there is minderApplications in the firestore document
+    if (!snap.after.data()?.minderApplications) {
+      return;
+    }
 
-exports.newDogAdded = functions.firestore.document("/dogs/{documentId}")
-    .onUpdate(async (snap, _) => {
-      // check if there is minderApplications in the firestore document
-      if (!snap.after.data()?.minderApplications) {
-        return;
-      }
+    const applications = snap.after.data().minderApplications;
 
-      const applications = snap.after.data().minderApplications;
-
-      // mark the first "pending" as "email-sent"
-      for (const application of applications) {
-        if (application.status === "pending") {
-          snap.after.ref.set({
+    // mark the first "pending" as "email-sent"
+    for (const application of applications) {
+      if (application.status === "pending") {
+        snap.after.ref.set(
+          {
             minderApplications: [
               ...applications,
               {
@@ -122,35 +122,34 @@ exports.newDogAdded = functions.firestore.document("/dogs/{documentId}")
                 status: "email-sent",
               },
             ],
-          }, {merge: true});
+          },
+          { merge: true }
+        );
 
-          // send the email to the owner
-          const owner = String(snap.after.data().owner);
+        // send the email to the owner
+        const owner = String(snap.after.data().owner);
 
-          functions.logger.log("Sending email to: ", owner);
+        functions.logger.log("Sending email to: ", owner);
 
-          const mailOptions = {
-            from: "MyDoogler <noreply@firebase.com>",
-            to: owner,
-            subject: `You have received a new application from ${application.minderEmail}`,
-            text: application.message,
-          };
+        const mailOptions = {
+          from: "MyDoogler <noreply@firebase.com>",
+          to: owner,
+          subject: `You have received a new application from ${application.minderEmail}`,
+          text: application.message,
+        };
 
-          try {
-            await mailTransport.sendMail(mailOptions);
-            functions.logger.log(
-                "Email sent to:",
-                owner
-            );
-          } catch (error) {
-            functions.logger.error(
-                "There was an error while sending the email:",
-                error
-            );
-          }
-          break;
+        try {
+          await mailTransport.sendMail(mailOptions);
+          functions.logger.log("Email sent to:", owner);
+        } catch (error) {
+          functions.logger.error(
+            "There was an error while sending the email:",
+            error
+          );
         }
+        break;
       }
+    }
 
-      return null;
-    });
+    return null;
+  });

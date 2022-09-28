@@ -17,12 +17,12 @@ export const CreateDooglerForm = () => {
   const [office, setOffice] = useState<string>("");
 
   // imgSrc is set by ImageUpload.tsx, after the user uploads an image
-  const [imgSrc, setImgSrc] = useState<string>()
+  const [imgSrc, setImgSrc] = useState<string>();
 
-  const [loading, setLoading] = useState<boolean>(false)
-  const [success, setSuccess] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const gotEverything = !name || !breed || !age || !office || !imgSrc
+  const gotEverything = !name || !breed || !age || !office || !imgSrc;
 
   const submit = async () => {
     if (!user) {
@@ -34,7 +34,7 @@ export const CreateDooglerForm = () => {
       return;
     }
     setLoading(true);
-    const id = uuid()
+    const id = uuid();
     const dog = {
       id,
       breed,
@@ -45,17 +45,17 @@ export const CreateDooglerForm = () => {
       imgSrc,
       owner: user.email,
     };
-    console.log(dog)
+    console.log(dog);
     try {
       // TODO test if it adds the key ID to the dog object and its the same
-      await setDoc(doc(collection(firestore, "dogs"), id), dog)
+      await setDoc(doc(collection(firestore, "dogs"), id), dog);
       alert("Doogler created successfully");
       setSuccess(true);
     } catch (error) {
       alert(`Error creating doogler: ${error}`);
     }
     setLoading(false);
-  }
+  };
 
   const ThanksForCreating = () => (
     <div>
@@ -63,104 +63,102 @@ export const CreateDooglerForm = () => {
       <p>Thanks for adding a doogler to the pack!</p>
       <button onClick={() => setSuccess(false)}>Add another doogler</button>
     </div>
-  )
+  );
 
   return (
     <div>
-      {status === "loading"
-        ? <Spinner />
-        : (
-          success
-            ? <ThanksForCreating />
-            : (
-              <div className="upload-form">
-                <div className="upload-form__upload">
-                  <ImageUpload url={`${user?.uid}/dogs`} setImgSrc={setImgSrc} />
-                </div>
-                <div className="upload-form__input">
-                  <div style={{ textAlign: "start" }}>
-                    <div className="label">
-                      <b>Name:</b>
-                    </div>
-                    <input
-                      placeholder={"Stitch"}
-                      value={name}
-                      onChange={(e) => {
-                        setName(e.target.value)
-                        e.preventDefault();
-                      }}
-                    />
-                  </div>
-                  <div style={{ textAlign: "start" }}>
-                    <div className="label">
-                      <b>Breed:</b>
-                    </div>
-                    <input
-                      placeholder={"Pug"}
-                      value={breed}
-                      onChange={(e) => {
-                        setBreed(e.target.value)
-                        e.preventDefault();
-                      }}
-                    />
-                  </div>
-                  <div style={{ textAlign: "start" }}>
-                    <div className="label">
-                      <b>Age:</b>
-                    </div>
-                    <input
-                      placeholder={"3"}
-                      value={age}
-                      type={"number"}
-                      min={0}
-                      max={20}
-                      onChange={(e) => {
-                        setAge(e.target.value)
-                        e.preventDefault();
-                      }}
-                    />
-                  </div>
-                  <div style={{ textAlign: "start" }}>
-                    <div className="label">
-                      <b>Office:</b>
-                    </div>
-                    {/* TODO could make the below a select */}
-                    <input
-                      placeholder={"IE-DUB-VSO"}
-                      value={office}
-                      onChange={(e) => {
-                        setOffice(e.target.value)
-                        e.preventDefault();
-                      }}
-                    />
-                  </div>
-                  <div style={{ textAlign: "start" }}>
-                    <div className="label">
-                      <b>Description (optional):</b>
-                    </div>
-                    <textarea
-                      placeholder={"Loves beily rubs"}
-                      value={description}
-                      style={{ height: '5rem' }}
-                      onChange={(e) => {
-                        setDescription(e.target.value);
-                        e.preventDefault();
-                      }}
-                    />
-                  </div>
-                  <button
-                    style={{
-                      width: 80,
-                      height: 30,
-                    }}
-                    onClick={!loading ? submit : () => { }}
-                  >
-                    {!loading ? "Submit" : "Submitting..."}
-                  </button>
-                </div>
+      {status === "loading" ? (
+        <Spinner />
+      ) : success ? (
+        <ThanksForCreating />
+      ) : (
+        <div className="upload-form">
+          <div className="upload-form__upload">
+            <ImageUpload url={`${user?.uid}/dogs`} setImgSrc={setImgSrc} />
+          </div>
+          <div className="upload-form__input">
+            <div style={{ textAlign: "start" }}>
+              <div className="label">
+                <b>Name:</b>
               </div>
-            )
-        )}
+              <input
+                placeholder={"Stitch"}
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  e.preventDefault();
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "start" }}>
+              <div className="label">
+                <b>Breed:</b>
+              </div>
+              <input
+                placeholder={"Pug"}
+                value={breed}
+                onChange={(e) => {
+                  setBreed(e.target.value);
+                  e.preventDefault();
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "start" }}>
+              <div className="label">
+                <b>Age:</b>
+              </div>
+              <input
+                placeholder={"3"}
+                value={age}
+                type={"number"}
+                min={0}
+                max={20}
+                onChange={(e) => {
+                  setAge(e.target.value);
+                  e.preventDefault();
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "start" }}>
+              <div className="label">
+                <b>Office:</b>
+              </div>
+              {/* TODO could make the below a select */}
+              <input
+                placeholder={"IE-DUB-VSO"}
+                value={office}
+                onChange={(e) => {
+                  setOffice(e.target.value);
+                  e.preventDefault();
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "start" }}>
+              <div className="label">
+                <b>Description (optional):</b>
+              </div>
+              <textarea
+                placeholder={"Loves beily rubs"}
+                value={description}
+                style={{ height: "5rem" }}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  e.preventDefault();
+                }}
+              />
+            </div>
+            <button
+              style={{
+                width: 80,
+                height: 30,
+              }}
+              onClick={!loading ? submit : () => {}}
+            >
+              {!loading ? "Submit" : "Submitting..."}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};

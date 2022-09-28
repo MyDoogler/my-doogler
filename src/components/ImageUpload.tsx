@@ -1,15 +1,19 @@
-import { useCallback, useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import {
-  useStorage,
-  useStorageTask
-} from "reactfire";
+  useCallback,
+  useEffect,
+  useState,
+  useMemo,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { useStorage, useStorageTask } from "reactfire";
 import {
   ref,
   uploadBytesResumable,
   UploadTaskSnapshot,
   StorageReference,
   UploadTask,
-  getDownloadURL
+  getDownloadURL,
 } from "firebase/storage";
 import { useDropzone } from "react-dropzone";
 
@@ -96,7 +100,7 @@ interface PendingUpload {
 
 interface ImageUploadProps {
   url: string | undefined;
-  setImgSrc: Dispatch<SetStateAction<string | undefined>>
+  setImgSrc: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
@@ -126,7 +130,7 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
         uploadTask: _uploadTask,
         storageRef: fileRef,
       });
-      // only set when upload is done, subscribe to task state, 
+      // only set when upload is done, subscribe to task state,
       // yet still pass it on to the child component to display progress
       // this helps, yet still not ideal and using retries below
       _uploadTask.on("state_changed", (snapshot) => {
@@ -134,7 +138,7 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
           setSnapshotRef(_uploadTask.snapshot.ref);
           setImgSrc(_uploadTask.snapshot.ref.toString());
         }
-      })
+      });
       setSnapshotRef(_uploadTask.snapshot.ref);
       setImgSrc(_uploadTask.snapshot.ref.toString());
     }
@@ -153,19 +157,19 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
 
       const getUrl = async () => {
         try {
-          const _url = await getDownloadURL(snapshotRef)
+          const _url = await getDownloadURL(snapshotRef);
           setDownloadUrl(_url);
         } catch (e) {
           if (retries < 5) {
             retries += 1;
             console.log("retrying after 1 sec", "retries", retries);
-            await sleep(1000)
+            await sleep(1000);
             await getUrl();
           }
         }
-      }
+      };
 
-      getUrl()
+      getUrl();
     }
   }, [snapshotRef]);
 
@@ -191,10 +195,25 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
   return (
     <>
       {downloadUrl ? (
-        <div style={{ position: 'relative' }}>
-          <img alt="user-uploaded-dog" src={downloadUrl} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
-          <div onClick={clear} style={{ color: 'white', position: 'absolute', zIndex: '9', fontSize: '3rem', top: 10, left: -10, cursor: 'pointer' }}>
-            {'\u274C'} {/* X emoji */}
+        <div style={{ position: "relative" }}>
+          <img
+            alt="user-uploaded-dog"
+            src={downloadUrl}
+            style={{ width: "100%", height: "100%", borderRadius: 10 }}
+          />
+          <div
+            onClick={clear}
+            style={{
+              color: "white",
+              position: "absolute",
+              zIndex: "9",
+              fontSize: "3rem",
+              top: 10,
+              left: -10,
+              cursor: "pointer",
+            }}
+          >
+            {"\u274C"} {/* X emoji */}
           </div>
         </div>
       ) : (
@@ -205,7 +224,12 @@ export const ImageUpload = ({ setImgSrc, url }: ImageUploadProps) => {
               <UploadProgress uploadTask={uploadTask} storageRef={storageRef} />
             </div>
           ))}
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/OOjs_UI_icon_camera.svg/1200px-OOjs_UI_icon_camera.svg.png" width={50} style={{ margin: 'auto' }} alt="camera-icon" />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/OOjs_UI_icon_camera.svg/1200px-OOjs_UI_icon_camera.svg.png"
+            width={50}
+            style={{ margin: "auto" }}
+            alt="camera-icon"
+          />
         </div>
       )}
     </>
