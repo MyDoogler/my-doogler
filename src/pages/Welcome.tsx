@@ -20,6 +20,9 @@ export const Welcome = () => {
           <p>
             Note: the site is in alpha phase, some things might not work. If you
             have any questions or remarks, please contact us at <a href="mailto:mydoogler@google.com">mydoogler@google.com</a>
+            <p>
+              Be sure not to upload any personal/sensitive data!
+            </p>
           </p>
         </i>
       </p>

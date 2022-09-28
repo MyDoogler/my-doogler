@@ -22,7 +22,7 @@ export const Create = () => {
           <CreateDooglerForm />
         ) : (
           <>
-            <div>You must be signed in to create a doogler</div>
+            <div style={{ marginTop: 10 }}>You must be signed in to create a doogler</div>
             <Login />
           </>
         )
