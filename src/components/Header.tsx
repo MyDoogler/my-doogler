@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth, useSigninCheck, useUser } from "reactfire";
 import paw from "../assets/paw.svg";
@@ -126,7 +126,7 @@ export const Header = () => {
       <div style={{ flex: "1", display: "flex", justifyContent: "flex-start" }}>
         <img src={paw} alt="paw-logo" width={30} height={30} />
       </div>
-      {width > 600 ? (
+      {width > 800 ? (
         <>
           <LinksMenu /> <SignInMenu />
         </>
